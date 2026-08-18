@@ -48,6 +48,20 @@ export const metadata: Metadata = {
        vacías hasta que exista el archivo. */
     images: [{ url: '/images/placeholder.jpg', width: 1200, height: 630, alt: 'Scronter' }],
   },
+  /* Deja el commit desplegado visible en el HTML, como
+     <meta name="scronter-build" content="f690c1c">
+
+     Para qué: sin esto no hay forma de saber desde afuera qué versión está
+     realmente en producción. Los cambios de código no siempre se ven en la
+     página — un arreglo interno o una foto que sigue en null renderizan igual —
+     así que "¿ya se desplegó?" se vuelve una pregunta que solo el panel de
+     Vercel puede responder. Con esta línea se responde con un solo fetch.
+
+     VERCEL_GIT_COMMIT_SHA la inyecta Vercel en cada build. En local no existe,
+     así que dice 'local'. */
+  other: {
+    'scronter-build': process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'local',
+  },
 }
 
 export default function RootLayout({
