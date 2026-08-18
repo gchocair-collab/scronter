@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { Buyer, CartLine } from '@/types'
 import { createPayment } from '@/lib/flow/client'
+import { esLocal, getSiteUrl } from '@/lib/site-url'
 import {
   attachFlowToken,
   calcularTotal,
@@ -158,12 +159,13 @@ export async function POST(req: NextRequest) {
 
     /* ---------------------------------------------------------------------
        6. URLs de callback.
-       Se derivan de NEXT_PUBLIC_SITE_URL para que el mismo código funcione en
-       local (con túnel), en preview y en producción sin tocar nada.
+       getSiteUrl() resuelve la base para los tres entornos sin tocar código:
+       tu dominio o el túnel via NEXT_PUBLIC_SITE_URL, y en Vercel las
+       variables que la plataforma inyecta sola. Ver `src/lib/site-url.ts`.
        --------------------------------------------------------------------- */
-    const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, '')
+    const base = getSiteUrl()
 
-    if (/localhost|127\.0\.0\.1/.test(base)) {
+    if (esLocal(base)) {
       // No es un error fatal: el checkout de Flow funciona y el cobro se hace.
       // Lo que se pierde es el webhook, así que la orden queda 'pendiente' para
       // siempre y el comprador ve "pago no confirmado" aunque pagó.

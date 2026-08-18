@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { JSX, ReactNode } from 'react'
 import './globals.css'
 import { fontVariables } from '@/lib/fonts'
+import { getSiteUrl } from '@/lib/site-url'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 
@@ -16,8 +17,10 @@ import { Footer } from '@/components/layout/Footer'
 
 /** La misma URL pública que usa Flow para los webhooks. Sin ella, las rutas
  *  relativas de Open Graph no se pueden absolutizar y las previsualizaciones de
- *  WhatsApp / Instagram salen sin imagen. */
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+ *  WhatsApp / Instagram salen sin imagen.
+ *  En Vercel se resuelve sola desde las variables que la plataforma inyecta;
+ *  ver la precedencia en `src/lib/site-url.ts`. */
+const SITE_URL = getSiteUrl()
 
 const DESCRIPCION =
   'Tablas, gorros, polerones, poleras y zapatillas de skate. Despacho a todo Chile y pago con Flow.'
