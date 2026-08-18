@@ -91,8 +91,10 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-5 max-w-xl text-base text-muted sm:text-lg">
-            SKATEBOARDS & STREETWEAR. Diseños y manufactura nacional. Creados para quienes viven la calle, el skate y la naturaleza como una sola inspiración..
-          </p>
+            SKATEBOARDS & STREETWEAR. Diseños y manufactura nacional. Creados
+            para quienes viven la calle, el skate y la naturaleza como una sola
+            inspiración.
+</p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
