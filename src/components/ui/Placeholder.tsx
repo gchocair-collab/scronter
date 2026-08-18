@@ -1,30 +1,28 @@
+import Image from 'next/image'
 import type { JSX } from 'react'
 import { cn } from '@/lib/format'
 
 /* ============================================================================
-   PLACEHOLDER — el sustituto de las fotos que todavía no existen.
+   PLACEHOLDER — muestra la foto del producto, o un bloque si todavía no hay.
 
-   ¿Por qué existe este componente en vez de un <Image> apuntando a un archivo?
-   Porque `next/image` con un `src` local que no está en /public rompe el BUILD,
-   no solo la vista: Next intenta leer el archivo en tiempo de compilación y
-   falla. Y un <img> a un archivo inexistente deja el ícono de imagen rota en
-   cada card, que hace ver la tienda entera como si estuviera caída.
+   Un solo componente cubre los dos estados a propósito. Así se pueden ir
+   agregando las fotos de a una sin tocar ninguna página: la que tiene `src`
+   muestra la imagen, la que no, muestra el bloque con el nombre. El sitio nunca
+   queda con íconos de imagen rota ni con la grilla descuadrada.
 
-   Así que mientras no haya fotos, todas las imágenes del sitio pasan por acá:
-   un bloque sólido con el nombre del producto encima. La grilla conserva sus
-   proporciones y el sitio se ve intencional, no incompleto.
+   Por qué el bloque y no un <img> apuntando a un archivo que falta: el build
+   pasa igual (lo verifiqué), pero en runtime el optimizador de Next responde
+   HTTP 400 y el navegador dibuja el ícono de imagen rota en cada card — la
+   tienda se ve caída sin que nada falle de forma visible en los logs. El bloque
+   es un estado deliberado, no un error silencioso.
 
-   TODO: reemplazar por next/image cuando existan las fotos reales.
-   El cambio es local a este archivo si se mantiene la misma firma:
-       <Image src={producto.imagen} alt={producto.nombre} fill className="object-cover" />
-   dentro del mismo contenedor con `aspect-*`, para que el ratio siga siendo
-   responsabilidad de este componente y no de cada llamador.
+   Para agregar fotos, ver IMAGENES.md en la raíz del proyecto.
    ============================================================================ */
 
 /**
- * Los ratios se declaran en un mapa (y no armando la clase con template
- * string) porque Tailwind escanea el código como texto: una clase construida
- * en runtime no aparece en el CSS final y el bloque quedaría sin alto.
+ * Los ratios se declaran en un mapa y no armando la clase con template string
+ * porque Tailwind escanea el código como TEXTO: una clase construida en runtime
+ * no aparece en el CSS final y el bloque quedaría sin alto.
  */
 const RATIO: Record<'square' | 'portrait' | 'wide', string> = {
   square: 'aspect-square', // grilla del catálogo
@@ -33,42 +31,72 @@ const RATIO: Record<'square' | 'portrait' | 'wide', string> = {
 }
 
 export function Placeholder(props: {
-  /** Texto que se dibuja encima. Normalmente el nombre del producto. */
+  /** Nombre del producto. Se dibuja en el bloque, y es el `alt` de la imagen. */
   label: string
+  /**
+   * Ruta de la foto bajo /public — ej. '/images/tabla-og.jpg'.
+   * `null` o ausente = todavía no hay foto, se dibuja el bloque.
+   */
+  src?: string | null
   ratio?: 'square' | 'portrait' | 'wide'
   className?: string
+  /**
+   * Ponelo en true SOLO para la imagen más grande visible al cargar la página
+   * (el hero). Le dice a Next que la cargue con prioridad. Usarlo en todas las
+   * cards tiene el efecto contrario: compiten entre sí y todo carga más lento.
+   */
+  priority?: boolean
 }): JSX.Element {
-  const { label, ratio = 'square', className } = props
+  const { label, src, ratio = 'square', className, priority = false } = props
 
+  const contenedor = cn(
+    'relative flex items-center justify-center overflow-hidden',
+    'border border-line bg-raised',
+    'rounded',
+    RATIO[ratio],
+    className,
+  )
+
+  /* ------------------------------------------------------------------ FOTO -- */
+  if (src) {
+    return (
+      <div className={contenedor}>
+        <Image
+          src={src}
+          alt={label}
+          fill
+          // `fill` hace que la imagen ocupe el contenedor; object-cover recorta
+          // en vez de deformar, que es lo correcto para fotos de producto de
+          // proporciones distintas.
+          className="object-cover"
+          // `sizes` evita que Next sirva la versión más grande a un teléfono.
+          // Refleja la grilla real: 2 columnas en móvil, 3 en tablet, 4 en desktop.
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          priority={priority}
+        />
+      </div>
+    )
+  }
+
+  /* ---------------------------------------------------------------- BLOQUE -- */
   return (
-    // role="img" + aria-label: para un lector de pantalla esto ocupa el lugar
-    // de la foto, así que se anuncia como una imagen con su descripción en vez
-    // de leer el texto decorativo de adentro.
-    <div
-      role="img"
-      aria-label={label}
-      className={cn(
-        'relative flex items-center justify-center overflow-hidden',
-        'border border-line bg-raised',
-        'rounded',
-        RATIO[ratio],
-        className,
-      )}
-    >
-      {/* Diagonal tenue: le da textura al bloque para que se lea como
-          "acá va una foto" y no como un error de carga. Opacidad baja y color
-          por token — nunca un color literal. */}
+    // role="img" + aria-label: para un lector de pantalla esto ocupa el lugar de
+    // la foto, así que se anuncia como imagen con su descripción en vez de leer
+    // el texto decorativo de adentro.
+    <div role="img" aria-label={label} className={contenedor}>
+      {/* Diagonal tenue: le da textura para que se lea como "acá va una foto" y
+          no como un error de carga. Opacidad baja y color por token. */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 border-b border-line/60"
         style={{
           // Único caso con `style`: el patrón repetido no tiene clase de
-          // Tailwind. El color sale igual del token, no está hardcodeado.
+          // Tailwind. El color sale del token igual, no está hardcodeado.
           backgroundImage:
             'repeating-linear-gradient(45deg, rgb(var(--line) / 0.35) 0 1px, transparent 1px 10px)',
         }}
       />
-      {/* `truncate` necesita un ancho acotado, de ahí el max-w-full. Un nombre
+      {/* `truncate` necesita un ancho acotado, de ahí el max-w-full: un nombre
           largo se corta con puntos suspensivos en vez de desbordar la card. */}
       <span className="relative max-w-full select-none truncate px-3 text-center font-display text-xs uppercase tracking-widest text-muted">
         {label}

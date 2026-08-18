@@ -35,11 +35,12 @@ export function ProductCard({ producto }: { producto: Product }): JSX.Element {
       )}
     >
       <div className="relative">
-        {/* TODO: reemplazar por la foto real del producto (producto.imagen) —
-            hoy el archivo no existe en /public y next/image rompería el build.
-            El cambio se hace dentro de <Placeholder>, no acá. */}
+        {/* La foto sale de producto.imagen. Si está en null, <Placeholder>
+            dibuja el bloque con el nombre. No hay que tocar nada acá para
+            agregar fotos: se cambia el null en data/products.ts. Ver IMAGENES.md */}
         <Placeholder
           label={producto.nombre}
+          src={producto.imagen}
           ratio="square"
           // Agotado se ve apagado, no escondido: el visitante igual quiere
           // saber que el modelo existe.

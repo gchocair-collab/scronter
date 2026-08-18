@@ -29,6 +29,26 @@ export const metadata: Metadata = {
 const ctaBase =
   'inline-flex items-center justify-center rounded px-6 py-3 font-display text-sm uppercase tracking-widest transition-colors'
 
+/* ----------------------------------------------------------------------------
+   IMÁGENES DEL HOME
+   Estas dos no viven en el catálogo porque no pertenecen a ningún producto.
+   `null` = todavía no hay foto, se dibuja el bloque con el rótulo.
+   Para ponerlas: copiás el archivo a /public/images/ y reemplazás el null.
+   Paso a paso en IMAGENES.md.
+   ---------------------------------------------------------------------------- */
+
+/** Banner de portada. Formato horizontal, mínimo 1920x1080. */
+const HERO_IMAGEN: string | null = null
+
+/** Una foto por categoría, cuadrada. Las que queden en null muestran el bloque. */
+const IMAGEN_CATEGORIA: Record<string, string | null> = {
+  tablas: null,
+  gorros: null,
+  polerones: null,
+  poleras: null,
+  zapatillas: null,
+}
+
 export default function HomePage() {
   const destacados = getFeaturedProducts()
 
@@ -38,17 +58,20 @@ export default function HomePage() {
           1 · HERO
           ==================================================================== */}
       <section className="relative isolate overflow-hidden border-b border-line">
-        {/* ⚠️ TODO: REEMPLAZAR POR EL BANNER REAL ⚠️
-            Acá va la foto o el video de portada (loop mudo, autoplay, poster).
-            Mientras no exista el asset se dibuja el <Placeholder>: si acá
-            hubiera un next/image apuntando a un archivo inexistente, el build
-            de Next falla. Al cambiarlo, mantener el mismo alto y el mismo
-            degradado de abajo o el título pierde contraste. */}
+        {/* Banner de portada. Sale de HERO_IMAGEN (arriba de este archivo).
+            Si querés un VIDEO en lugar de foto, este es el único lugar a
+            cambiar: reemplazá el <Placeholder> por un <video autoPlay muted
+            loop playsInline poster="..."> con las mismas clases.
+            Ojo al cambiarlo: mantené el degradado de abajo, que es lo que le da
+            contraste al título sobre cualquier imagen. */}
         <div className="absolute inset-0 -z-10">
           <Placeholder
             label="Banner Scronter"
+            src={HERO_IMAGEN}
             ratio="wide"
             className="h-full w-full"
+            // priority: es la imagen más grande y visible al cargar la home.
+            priority
           />
           {/* Degradado desde el fondo de página hacia arriba: mantiene legible
               el texto sobre cualquier imagen que se ponga después, sin tener
@@ -108,10 +131,14 @@ export default function HomePage() {
                 className="group block overflow-hidden rounded border border-line bg-surface transition-colors hover:border-accent"
               >
                 <div className="relative">
-                  {/* TODO: reemplazar por la foto de categoría. El texto del
-                      Placeholder queda al centro y el rótulo real abajo, así
-                      no se pisan mientras no exista la imagen. */}
-                  <Placeholder label={CATEGORIA_LABEL[categoria]} ratio="square" />
+                  {/* Foto de categoría, de IMAGEN_CATEGORIA (arriba). El rótulo
+                      va abajo sobre el scrim, así no se pisa con el texto que
+                      dibuja el bloque cuando todavía no hay imagen. */}
+                  <Placeholder
+                    label={CATEGORIA_LABEL[categoria]}
+                    src={IMAGEN_CATEGORIA[categoria]}
+                    ratio="square"
+                  />
 
                   {/* Scrim solo en la mitad inferior: el rótulo se lee siempre,
                       pero la imagen no queda apagada del todo. */}

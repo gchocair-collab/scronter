@@ -98,10 +98,16 @@ export default async function ProductoPage({
           a la derecha. */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
         <div>
-          {/* TODO: reemplazar por la foto real del producto (next/image contra
-              producto.imagen). Mientras el archivo no exista, next/image rompe
-              el build, así que va el bloque dibujado. */}
-          <Placeholder label={producto.nombre} ratio={ratio} className="border border-line" />
+          {/* La foto sale de producto.imagen; en null se dibuja el bloque.
+              priority porque en el detalle esta es la imagen principal y la
+              primera que se ve al cargar. Ver IMAGENES.md */}
+          <Placeholder
+            label={producto.nombre}
+            src={producto.imagen}
+            ratio={ratio}
+            className="border border-line"
+            priority
+          />
         </div>
 
         <div>

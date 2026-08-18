@@ -50,8 +50,18 @@ export interface Product {
   precio: number
   descripcionCorta: string
   descripcion: string
-  /** Ruta bajo /public. TODO: reemplazar por la foto real del producto. */
-  imagen: string
+  /**
+   * Ruta de la foto del producto, relativa a /public. Ej: '/images/tabla-og.jpg'
+   *
+   * `null` significa "todavía no hay foto": el componente <Placeholder> dibuja
+   * en su lugar un bloque con el nombre del producto. Es un estado explícito y
+   * no un descuido — permite ir agregando las fotos de a una, sin que el sitio
+   * se vea roto mientras faltan.
+   *
+   * Para agregar una foto: copiás el archivo a /public/images/ y reemplazás el
+   * null por su ruta. Ver IMAGENES.md.
+   */
+  imagen: string | null
   /** Cómo rotular el selector en el detalle: "Medida" para tablas, "Talla" para ropa. */
   tipoVariante: 'medida' | 'talla'
   variantes: Variant[]

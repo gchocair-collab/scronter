@@ -34,13 +34,18 @@ export function CartItem({ linea }: { linea: CartLineView }) {
   return (
     <li className="flex gap-3 border-b border-line py-4 last:border-b-0 sm:gap-4 sm:py-5">
       {/* TODO: reemplazar por la foto real del producto cuando exista el asset.
-          Mientras no haya archivo en /public, next/image rompería el build. */}
+          La foto sale de producto.imagen; si está en null se dibuja el bloque. */}
       <Link
         href={`/tienda/${producto.slug}`}
         className="w-20 shrink-0 sm:w-24"
         aria-label={`Ver ${producto.nombre}`}
       >
-        <Placeholder label={producto.nombre} ratio="square" className="rounded-sm" />
+        <Placeholder
+          label={producto.nombre}
+          src={producto.imagen}
+          ratio="square"
+          className="rounded-sm"
+        />
       </Link>
 
       <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:gap-4">

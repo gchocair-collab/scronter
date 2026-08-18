@@ -231,27 +231,28 @@ para display; DM Sans, Work Sans, IBM Plex Sans para body).
 
 ## 8. Reemplazar los placeholders
 
-Hoy no hay una sola foto real. Todo lo visual se dibuja con `<Placeholder>`
-(`src/components/ui/Placeholder.tsx`), un bloque con el nombre del producto encima. Es
-deliberado: `next/image` apuntando a un archivo local que no existe **rompe el build**.
+👉 **Para las fotos hay una guía aparte, paso a paso: [IMAGENES.md](IMAGENES.md).**
 
-| Qué | Dónde va | Nota |
+Resumen: el código ya soporta fotos reales. `<Placeholder>`
+(`src/components/ui/Placeholder.tsx`) muestra la imagen cuando existe y dibuja un bloque con el
+nombre cuando todavía no. Todos los productos arrancan en `imagen: null`, y se van llenando de
+a uno — no hace falta tener las 16 fotos para ver la primera funcionando.
+
+Lo que NO son fotos y también hay que reemplazar:
+
+| Qué | Dónde | Nota |
 | --- | --- | --- |
-| Foto de producto | `/public/images/placeholder.jpg` | Es a lo que apunta `producto.imagen` en `src/data/products.ts`. Lo ideal: una foto por producto y actualizar cada `imagen`. |
-| Imagen del hero | `/public/images/placeholder-hero.jpg` | Horizontal, se usa en el home. |
-| Logotipo | `src/components/layout/Header.tsx` | Hoy es el texto `SCRONTER` en `font-display`. Reemplazar por el SVG del logo. |
+| Logotipo | `src/components/layout/Header.tsx` | Hoy es el texto `SCRONTER` en `font-display`. Reemplazar por el SVG en `/public/logo.svg`. |
 | Redes sociales | `src/components/layout/Footer.tsx` | Los `href="#"` son placeholders; poner Instagram, TikTok, etc. |
-| Datos de contacto | `src/components/layout/Footer.tsx` | Dirección, mail y teléfono son ficticios y están marcados con TODO. |
-| Imagen de Open Graph | `src/app/layout.tsx` (`metadata.openGraph`) | 1200×630 px. Sin esto, compartir el link en WhatsApp/Instagram no muestra nada. |
+| Datos de contacto | `src/components/layout/Footer.tsx` | Correo, WhatsApp y dirección son ficticios y están marcados con TODO. |
+| Imagen de Open Graph | `src/app/layout.tsx` (`metadata.openGraph`) | 1200×630 px. Sin esto, compartir el link en WhatsApp/Instagram no muestra imagen. |
 | Favicon | `src/app/favicon.ico` | — |
 
 Buscá `TODO:` en el proyecto y te salen todos los puntos a reemplazar.
 
-**Cuando existan las fotos:** se cambia `<Placeholder>` por `next/image`. El componente se
-reemplaza en su propio archivo o directamente en `ProductCard`/la ficha de producto, según
-cuánto quieras conservar el fallback. Si las fotos van a un CDN (Cloudinary, un CMS), hay que
-declarar su host en `next.config.ts` → `images.remotePatterns`, o `next/image` las rechaza; ya
-está el bloque comentado ahí.
+**Si las fotos van a un CDN** (Cloudinary, un CMS) en vez de a `/public`, hay que declarar su
+host en `next.config.ts` → `images.remotePatterns`, o `next/image` las rechaza. El bloque está
+comentado ahí mismo.
 
 ---
 
