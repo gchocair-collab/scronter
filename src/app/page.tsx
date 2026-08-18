@@ -7,9 +7,9 @@ import { getFeaturedProducts } from '@/data/products'
 import { CATEGORIA_LABEL, CATEGORIAS } from '@/types'
 
 export const metadata: Metadata = {
-  title: 'Scronter — Skate shop',
+  title: 'Scronter StreetLife & Skate shop',
   description:
-    'Tablas, ropa y zapatillas de skate. Armado en Chile, probado en la calle.',
+    'SKATEBOARDS & STREETWEAR. Diseños y manufactura nacional. Creados para quienes viven la calle, el skate y la naturaleza como una sola inspiración.',
 }
 
 /* ============================================================================
@@ -91,8 +91,7 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-5 max-w-xl text-base text-muted sm:text-lg">
-            Tablas de maple que aguantan el cemento de verdad y ropa pensada
-            para andar, no para la foto. Stock real, envíos a todo Chile.
+            SKATEBOARDS & STREETWEAR. Diseños y manufactura nacional. Creados para quienes viven la calle, el skate y la naturaleza como una sola inspiración..
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
