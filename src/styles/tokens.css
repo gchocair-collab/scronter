@@ -1,0 +1,90 @@
+/* ============================================================================
+   SCRONTER — TOKENS DE DISEÑO
+   ============================================================================
+
+   👉 ESTE ES EL ÚNICO ARCHIVO QUE TOCÁS PARA CAMBIAR TODOS LOS COLORES.
+
+   Ningún componente escribe un color literal (nada de `bg-[#C6FF00]` ni
+   `text-black`). Todos usan clases de Tailwind que apuntan a estas variables:
+
+       bg-base · bg-surface · bg-raised · text-ink · text-muted
+       bg-accent · text-accent · border-line
+       text-ok · text-warn · text-danger
+
+   Así que si cambiás `--accent` acá, cambia el sitio entero: botones, links,
+   badges, hovers, focus rings. No hay que buscar y reemplazar en 20 archivos.
+
+   El mapeo vive en `tailwind.config.ts` — no hace falta editarlo salvo que
+   quieras AGREGAR un token nuevo.
+
+   Para cambiar la TIPOGRAFÍA el archivo es otro: `src/lib/fonts.ts`.
+   ============================================================================ */
+
+:root {
+  /* --------------------------------------------------------------------------
+     GROUNDS — los tres niveles de fondo, de más oscuro a más claro.
+     La marca es oscura por definición (estética skate / grip tape), así que
+     no hay tema claro: el sitio se ve igual en cualquier setting del sistema.
+     Si algún día querés tema claro, ver la nota al final del archivo.
+     -------------------------------------------------------------------------- */
+  --base: 10 10 11;        /* #0A0A0B — fondo de página, negro grip tape   */
+  --surface: 23 24 26;     /* #17181A — cards, header, footer              */
+  --raised: 35 36 39;      /* #232427 — inputs, estados hover, chips       */
+
+  /* --------------------------------------------------------------------------
+     TINTA — texto sobre los grounds de arriba.
+     -------------------------------------------------------------------------- */
+  --ink: 242 242 240;      /* #F2F2F0 — texto principal, blanco cemento    */
+  --muted: 154 155 158;    /* #9A9B9E — texto secundario, labels           */
+  --line: 45 46 50;        /* #2D2E32 — bordes y divisores                 */
+
+  /* --------------------------------------------------------------------------
+     ACENTO — el color de la marca. 👈 CAMBIÁ ESTO PRIMERO.
+     Ahora: verde flúor (volt). Alternativas que funcionan sobre negro:
+       amarillo flúor  → 255 234 0     (#FFEA00)
+       naranja flúor   → 255 106 0     (#FF6A00)
+       cyan eléctrico  → 0 229 255     (#00E5FF)
+       magenta         → 255 0 122     (#FF007A)
+
+     `--accent-ink` es el color del TEXTO que va ENCIMA del acento (por ej.
+     dentro de un botón lleno). Con acentos claros y saturados va negro; si
+     elegís un acento oscuro, cambialo a `var(--ink)` o quedará ilegible.
+     -------------------------------------------------------------------------- */
+  --accent: 198 255 0;     /* #C6FF00 */
+  --accent-hover: 212 255 61;
+  --accent-ink: 10 10 11;  /* texto sobre el acento */
+
+  /* --------------------------------------------------------------------------
+     SEMÁNTICOS — estado, NO identidad de marca.
+     Deliberadamente separados del acento: si el acento también significara
+     "éxito", cambiar la marca a rojo haría que un pago aprobado se viera como
+     un error. Estos tres se quedan quietos aunque cambies `--accent`.
+     -------------------------------------------------------------------------- */
+  --ok: 61 220 132;        /* #3DDC84 — pago aprobado, en stock            */
+  --warn: 255 176 32;      /* #FFB020 — pago pendiente, últimas unidades   */
+  --danger: 255 92 77;     /* #FF5C4D — pago rechazado, agotado            */
+
+  /* --------------------------------------------------------------------------
+     FORMA — qué tan redondeado es todo.
+     La estética skate es angulosa; por eso los radios son chicos.
+     Subilos si querés algo más suave, o poné todo en 0 para un look brutalista.
+     -------------------------------------------------------------------------- */
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-lg: 6px;
+}
+
+/* ============================================================================
+   ¿Querés agregar un tema claro más adelante?
+
+   El sitio está deliberadamente en un solo tema (oscuro), que es lo correcto
+   para una marca de skate. Si en algún momento querés soportar los dos:
+
+   1. Movés los valores de arriba a un bloque `:root[data-theme="dark"]`.
+   2. Agregás un `:root` (o `[data-theme="light"]`) con la paleta clara.
+   3. NO redefinas colores dentro de un `@media` sin también cubrir el
+      atributo `data-theme`, o el sitio queda con el texto de un tema sobre
+      el fondo del otro.
+
+   Los componentes no cambian: ya leen todo por token.
+   ============================================================================ */

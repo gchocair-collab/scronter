@@ -1,0 +1,33 @@
+{
+  "name": "scronter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tienda online de Scronter — ropa y accesorios de skate.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.5.23",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  },
+  "overridesComment": "postcss y sharp entran como dependencias transitivas de Next. Las versiones que Next 15 arrastra tienen advisories de severidad alta (npm audit), y estos overrides las fuerzan a las versiones ya parchadas sin tener que saltar a Next 16. Cuando migres a Next 16 revisá si siguen siendo necesarios: npm audit te lo dice.",
+  "overrides": {
+    "postcss": "^8.5.26",
+    "sharp": "^0.35.3"
+  }
+}

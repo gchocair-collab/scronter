@@ -1,0 +1,27 @@
+# Normaliza los finales de línea al guardar en el repo (LF), sin importar el
+# sistema de quien commitea.
+#
+# ¿Por qué importa acá? Este repo lo van a editar al menos dos personas. Windows
+# escribe CRLF y macOS/Linux escriben LF: sin esta regla, cuando uno de los dos
+# guarda un archivo que el otro tocó, git ve TODAS las líneas como modificadas y
+# el diff se vuelve ilegible — no se distingue el cambio real del ruido.
+* text=auto eol=lf
+
+# Binarios: nunca convertir, o se corrompen.
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.tar.gz binary
+
+# El lockfile es generado: marcarlo así saca su diff de las revisiones de código
+# sin dejar de versionarlo (que es obligatorio para builds reproducibles).
+package-lock.json -diff linguist-generated

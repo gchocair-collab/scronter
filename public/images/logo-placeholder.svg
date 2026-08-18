@@ -1,0 +1,24 @@
+<!--
+  Logo provisorio de Scronter.
+
+  TODO: reemplazar por el logo real. Si el definitivo también es SVG, conviene
+  mantener el mismo viewBox (0 0 240 48) para que no haya que ajustar tamaños
+  en el Header.
+
+  Los colores están fijos acá porque un SVG servido como archivo estático no
+  puede leer las CSS custom properties del sitio. Si cambiás --accent en
+  tokens.css, actualizá el fill de abajo también. El Header usa texto en
+  font-display, así que este archivo solo hace falta si preferís logo gráfico.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48" role="img" aria-label="Scronter">
+  <rect width="240" height="48" fill="#0A0A0B"/>
+  <rect x="1" y="1" width="238" height="46" fill="none" stroke="#2D2E32" stroke-width="2"/>
+  <text
+    x="120" y="33"
+    text-anchor="middle"
+    font-family="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"
+    font-size="28"
+    letter-spacing="2"
+    fill="#C6FF00"
+  >SCRONTER</text>
+</svg>
