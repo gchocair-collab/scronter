@@ -24,6 +24,17 @@ export const CATEGORIA_LABEL: Record<Category, string> = {
 export const CATEGORIAS: Category[] = ['tablas', 'gorros', 'polerones', 'poleras', 'zapatillas']
 
 /**
+ * Subconjunto de `CATEGORIAS` que se muestra AHORA en la tienda: nav del
+ * header/footer, grilla del home y filtro de /tienda. Las categorías que no
+ * estén acá siguen existiendo en el catálogo y en el tipo `Category` — no se
+ * borra nada — pero no aparecen en ningún listado hasta que se agreguen acá.
+ *
+ * Para reactivar una categoría más adelante, sumala a este array. No hace
+ * falta tocar ningún otro archivo.
+ */
+export const CATEGORIAS_ACTIVAS: Category[] = ['tablas', 'gorros']
+
+/**
  * Una variante concreta y comprable de un producto.
  * El stock vive acá y no en el producto porque se agota por talla, no por
  * modelo: podés tener 12 poleras pero cero en L.
@@ -67,6 +78,14 @@ export interface Product {
   variantes: Variant[]
   /** Si aparece en la sección de destacados del home. */
   destacado: boolean
+  /**
+   * Opcional, `true` implícito si no está. Poné `false` para sacar el producto
+   * de todos los listados (catálogo, categoría, destacados) sin borrarlo — el
+   * mismo mecanismo que `CATEGORIAS_ACTIVAS`, pero por producto individual.
+   * Sigue existiendo para `getProductById`/`getProductBySlug` (carrito, órdenes
+   * viejas), así que reactivarlo más adelante es solo volver a poner `true`.
+   */
+  disponible?: boolean
 }
 
 /* --------------------------------------------------------------------------

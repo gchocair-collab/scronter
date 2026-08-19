@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { JSX } from 'react'
 import { CartBadge } from '@/components/layout/CartBadge'
@@ -35,14 +36,15 @@ export function Header(): JSX.Element {
        el sticky). */
     <header className="sticky top-0 z-50 border-b border-line bg-surface">
       <div className="shell flex h-14 items-center justify-between gap-4 sm:h-16">
-        {/* MARCA
-            TODO: reemplazar por el logo real (SVG en /public/logo.svg) cuando
-            exista. Mientras tanto es el wordmark en la display condensada. */}
-        <Link
-          href="/"
-          className="font-display text-2xl uppercase leading-none tracking-tight text-ink transition-colors hover:text-accent sm:text-3xl"
-        >
-          Scronter
+        {/* MARCA — logo real, 1000×200px en public/images/. */}
+        <Link href="/" className="flex items-center transition-opacity hover:opacity-80">
+          <Image
+            src="/images/logo-scronter-web-header.png"
+            alt="Scronter"
+            width={160}
+            height={32}
+            priority
+          />
         </Link>
 
         {/* NAV DE ESCRITORIO — oculto en móvil, donde manda el <details>. */}

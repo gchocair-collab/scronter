@@ -1,4 +1,4 @@
-﻿import type { Category, Product } from '@/types'
+﻿import { CATEGORIAS_ACTIVAS, type Category, type Product } from '@/types'
 
 /* ============================================================================
    SCRONTER — CATÁLOGO
@@ -34,36 +34,44 @@ export const products: Product[] = [
   {
     id: 'tbl-001',
     slug: 'tabla-concrete-jungle',
-    nombre: 'Tabla Concrete Jungle',
+    nombre: 'Scronter Humboldt Skateboard × Creavida',
     categoria: 'tablas',
-    precio: 52990,
-    descripcionCorta: 'Maple canadiense de 7 capas, cóncavo medio.',
+    // TODO: precio de venta pendiente de definir. Mientras esté en 0 no se
+    // debería vender de verdad — Flow rechaza montos bajo 350 igual.
+    precio: 0,
+    descripcionCorta: 'Modelo Humboldt, colab con Creavida. Maple canadiense de 7 capas.',
     descripcion:
-      'Siete capas de maple canadiense prensado en frío, cóncavo medio y nose ligeramente más alta que el tail. Equilibrada para transición y street — responde bien en bowl sin volverse impredecible en flatground. Viene sin lija.',
-    imagen: null,
+      'Scronter Humboldt Skateboard × Creavida. Gráfica exclusiva de esta colaboración, con el pingüino de Humboldt sobre la costa. Siete capas de maple canadiense prensado en frío, cóncavo medio y nose ligeramente más alta que el tail. Equilibrada para transición y street. ' +
+      'Medidas disponibles — Ancho 8": largo 31", grosor 14,25" · Ancho 8,25": largo 31", grosor 14,4" · Ancho 8,38": largo 32", grosor 14,4" · Ancho 8,5": largo 32,18", grosor 14,27".',
+    imagen: '/images/tabla-scronter-humboltd.jpg',
     tipoVariante: 'medida',
     variantes: [
-      { id: '8-0', label: '8.0"', stock: 6 },
-      { id: '8-25', label: '8.25"', stock: 4 },
-      { id: '8-5', label: '8.5"', stock: 2 },
+      { id: '8-0', label: '8"', stock: 6 },
+      { id: '8-25', label: '8,25"', stock: 5 },
+      { id: '8-38', label: '8,38"', stock: 3 },
+      { id: '8-5', label: '8,5"', stock: 2 },
     ],
     destacado: true,
   },
   {
     id: 'tbl-002',
     slug: 'tabla-nightshift',
-    nombre: 'Tabla Nightshift',
+    nombre: 'Scronter Black Skateboard',
     categoria: 'tablas',
-    precio: 48990,
-    descripcionCorta: 'Cóncavo profundo, para quien vive en el bowl.',
+    // TODO: precio de venta pendiente de definir. Mientras esté en 0 no se
+    // debería vender de verdad — Flow rechaza montos bajo 350 igual.
+    precio: 0,
+    descripcionCorta: 'Modelo Black, gráfica minimalista sobre fondo negro.',
     descripcion:
-      'Cóncavo profundo y wheelbase corto: gira cerrado y bloquea el pie en los grabs. Pensada para bowl y vert más que para street. Serigrafía a dos tintas sobre fondo negro mate.',
-    imagen: null,
+      'Scronter Black Skateboard. Logo Scronter serigrafiado en dos tintas sobre fondo negro mate. Cóncavo profundo y wheelbase corto: gira cerrado y bloquea el pie en los grabs. Pensada para bowl y vert más que para street. ' +
+      'Medidas disponibles — Ancho 8": largo 31", grosor 14,25" · Ancho 8,25": largo 31", grosor 14,4" · Ancho 8,38": largo 32", grosor 14,4" · Ancho 8,5": largo 32,18", grosor 14,27".',
+    imagen: '/images/tabla-scronter-black.jpg',
     tipoVariante: 'medida',
     variantes: [
-      { id: '8-25', label: '8.25"', stock: 5 },
-      { id: '8-5', label: '8.5"', stock: 5 },
-      { id: '8-75', label: '8.75"', stock: 3 },
+      { id: '8-0', label: '8"', stock: 6 },
+      { id: '8-25', label: '8,25"', stock: 4 },
+      { id: '8-38', label: '8,38"', stock: 3 },
+      { id: '8-5', label: '8,5"', stock: 2 },
     ],
     destacado: true,
   },
@@ -83,21 +91,27 @@ export const products: Product[] = [
       { id: '8-0', label: '8.0"', stock: 10 },
     ],
     destacado: false,
+    disponible: false,
   },
   {
     id: 'tbl-004',
     slug: 'tabla-grip-tape-og',
-    nombre: 'Tabla Grip Tape OG',
+    nombre: 'Scronter S Green Skateboard',
     categoria: 'tablas',
-    precio: 61990,
-    descripcionCorta: 'Edición limitada. Fondo negro, sin gráfica.',
+    // TODO: precio de venta pendiente de definir. Mientras esté en 0 no se
+    // debería vender de verdad — Flow rechaza montos bajo 350 igual.
+    precio: 0,
+    descripcionCorta: 'Modelo S Green, gráfica abstracta en verde, blanco y negro.',
     descripcion:
-      'Serie limitada sin serigrafía: solo el veteado del maple teñido en negro y el logo troquelado en el tail. Construcción idéntica a la Concrete Jungle. Tirada corta — cuando se agota no vuelve.',
-    imagen: null,
+      'Scronter S Green Skateboard. Gráfica abstracta exclusiva de esta tirada, en verde, blanco y negro. Siete capas de maple canadiense. Tirada corta — cuando se agota no vuelve. ' +
+      'Medidas disponibles — Ancho 8": largo 31", grosor 14,25" · Ancho 8,25": largo 31", grosor 14,4" · Ancho 8,38": largo 32", grosor 14,4" · Ancho 8,5": largo 32,18", grosor 14,27".',
+    imagen: '/images/tabla-scronter-green-s.jpg',
     tipoVariante: 'medida',
     variantes: [
-      { id: '8-25', label: '8.25"', stock: 2 },
-      { id: '8-5', label: '8.5"', stock: 1 },
+      { id: '8-0', label: '8"', stock: 2 },
+      { id: '8-25', label: '8,25"', stock: 2 },
+      { id: '8-38', label: '8,38"', stock: 1 },
+      { id: '8-5', label: '8,5"', stock: 1 },
     ],
     destacado: true,
   },
@@ -315,6 +329,22 @@ export function getAllProducts(): Product[] {
   return products
 }
 
+/**
+ * Productos de las categorías activas ahora mismo (ver `CATEGORIAS_ACTIVAS`
+ * en `types/index.ts`), sin los que tengan `disponible: false`. Es lo que hay
+ * que usar para cualquier listado general de la tienda — "todo el catálogo",
+ * destacados — para que una categoría o un producto puntual desactivado no
+ * aparezca en ningún lado hasta que se reactive.
+ */
+export function getVisibleProducts(): Product[] {
+  return products.filter((p) => CATEGORIAS_ACTIVAS.includes(p.categoria) && p.disponible !== false)
+}
+
+/**
+ * Búsqueda directa por slug/id: NO filtra por disponibilidad a propósito.
+ * El carrito y las órdenes ya creadas tienen que poder resolver un producto
+ * aunque se haya desactivado después de la compra.
+ */
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug)
 }
@@ -324,11 +354,13 @@ export function getProductById(id: string): Product | undefined {
 }
 
 export function getProductsByCategory(categoria: Category): Product[] {
-  return products.filter((p) => p.categoria === categoria)
+  return products.filter((p) => p.categoria === categoria && p.disponible !== false)
 }
 
 export function getFeaturedProducts(): Product[] {
-  return products.filter((p) => p.destacado)
+  return products.filter(
+    (p) => p.destacado && CATEGORIAS_ACTIVAS.includes(p.categoria) && p.disponible !== false,
+  )
 }
 
 /** Stock total de un producto, sumando todas sus variantes. */

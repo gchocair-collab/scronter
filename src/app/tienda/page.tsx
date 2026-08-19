@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 
 import { CategoryFilter } from '@/components/product/CategoryFilter'
 import { ProductGrid } from '@/components/product/ProductGrid'
-import { getAllProducts, getProductsByCategory } from '@/data/products'
-import { CATEGORIA_LABEL, CATEGORIAS, type Category } from '@/types'
+import { getProductsByCategory, getVisibleProducts } from '@/data/products'
+import { CATEGORIA_LABEL, CATEGORIAS_ACTIVAS, type Category } from '@/types'
 
 export const metadata: Metadata = {
   title: 'Tienda | Scronter',
@@ -12,17 +12,19 @@ export const metadata: Metadata = {
 }
 
 /**
- * Valida el valor crudo de la query string contra las categorías reales.
+ * Valida el valor crudo de la query string contra las categorías ACTIVAS
+ * (no contra todas las que existen en el tipo — ver `CATEGORIAS_ACTIVAS`).
  *
- * Cualquiera puede escribir /tienda?categoria=cualquiercosa a mano. Si nos
- * fiáramos del string, `getProductsByCategory` devolvería [] y la página se
- * vería vacía y rota; ante basura preferimos caer a "todas".
+ * Cualquiera puede escribir /tienda?categoria=cualquiercosa a mano, incluida
+ * una categoría desactivada. Si nos fiáramos del string, `getProductsByCategory`
+ * mostraría productos que en el resto del sitio están ocultos; ante cualquier
+ * valor que no esté activo preferimos caer a "todas".
  *
  * El cast a readonly string[] es solo para poder comparar un string arbitrario
  * contra el array tipado sin que TypeScript exija que ya sea un Category.
  */
 function parseCategoria(valor: string | undefined): Category | 'todas' {
-  if (valor && (CATEGORIAS as readonly string[]).includes(valor)) {
+  if (valor && (CATEGORIAS_ACTIVAS as readonly string[]).includes(valor)) {
     return valor as Category
   }
   return 'todas'
@@ -37,7 +39,7 @@ export default async function Page({
   const { categoria } = await searchParams
   const activa = parseCategoria(categoria)
 
-  const productos = activa === 'todas' ? getAllProducts() : getProductsByCategory(activa)
+  const productos = activa === 'todas' ? getVisibleProducts() : getProductsByCategory(activa)
   const titulo = activa === 'todas' ? 'Todo el catálogo' : CATEGORIA_LABEL[activa]
 
   return (

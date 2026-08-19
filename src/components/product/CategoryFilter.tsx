@@ -4,12 +4,12 @@ import Link from 'next/link'
 import type { JSX } from 'react'
 
 import { cn } from '@/lib/format'
-import { CATEGORIA_LABEL, CATEGORIAS, type Category } from '@/types'
+import { CATEGORIA_LABEL, CATEGORIAS_ACTIVAS, type Category } from '@/types'
 
 /** Cada opción del filtro: la de "todas" apunta a /tienda sin query. */
 const OPCIONES: Array<{ valor: Category | 'todas'; label: string; href: string }> = [
   { valor: 'todas', label: 'Todas', href: '/tienda' },
-  ...CATEGORIAS.map((c) => ({
+  ...CATEGORIAS_ACTIVAS.map((c) => ({
     valor: c,
     label: CATEGORIA_LABEL[c],
     href: `/tienda?categoria=${c}`,

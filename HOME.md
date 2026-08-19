@@ -25,7 +25,7 @@ Editá directamente el JSX:
 
 ```tsx
 <h1 className="mt-4 text-5xl leading-[0.9] sm:text-7xl lg:text-8xl">
-  Scronter
+  SCRONTER STREETLIFE & STREETWEAR
 </h1>
 
 <p className="mt-5 max-w-xl text-base text-muted sm:text-lg">

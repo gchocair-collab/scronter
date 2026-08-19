@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { Placeholder } from '@/components/ui/Placeholder'
 import { getFeaturedProducts } from '@/data/products'
-import { CATEGORIA_LABEL, CATEGORIAS } from '@/types'
+import { CATEGORIA_LABEL, CATEGORIAS_ACTIVAS } from '@/types'
 
 export const metadata: Metadata = {
   title: 'Scronter StreetLife & Skate shop',
@@ -38,7 +38,7 @@ const ctaBase =
    ---------------------------------------------------------------------------- */
 
 /** Banner de portada. Formato horizontal, mínimo 1920x1080. */
-const HERO_IMAGEN: string | null = null
+const HERO_IMAGEN: string | null = '/images/foto-scronter-hero.jpg'
 
 /** Una foto por categoría, cuadrada. Las que queden en null muestran el bloque. */
 const IMAGEN_CATEGORIA: Record<string, string | null> = {
@@ -66,7 +66,7 @@ export default function HomePage() {
             contraste al título sobre cualquier imagen. */}
         <div className="absolute inset-0 -z-10">
           <Placeholder
-            label="Banner Scronter"
+            label="Banner Scronter "
             src={HERO_IMAGEN}
             ratio="wide"
             className="h-full w-full"
@@ -83,15 +83,15 @@ export default function HomePage() {
             completa esconde que abajo hay tienda. */}
         <div className="shell flex min-h-[26rem] flex-col justify-end py-14 sm:min-h-[30rem] sm:py-20 lg:min-h-[34rem]">
           <p className="text-xs uppercase tracking-widest text-muted">
-            Skate shop · Santiago de Chile
+            StreetLife - SKATEBOARDS - STREETWEAR
           </p>
 
           <h1 className="mt-4 text-5xl leading-[0.9] sm:text-7xl lg:text-8xl">
-            Scronter
+            Scronter Skate shop
           </h1>
 
           <p className="mt-5 max-w-xl text-base text-muted sm:text-lg">
-            SKATEBOARDS & STREETWEAR. Diseños y manufactura nacional. Creados para quienes viven la calle, el skate y la naturaleza como una sola inspiración..
+            Diseños y produccion nacional. Creados para quienes viven la calle, el skate y la naturaleza como una sola inspiración.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -113,17 +113,18 @@ export default function HomePage() {
 
       {/* ====================================================================
           2 · CATEGORÍAS
-          Se recorre CATEGORIAS (y no las claves de CATEGORIA_LABEL) porque ese
-          array define el ORDEN de la vitrina; el objeto no garantiza ninguno.
+          Se recorre CATEGORIAS_ACTIVAS (y no las claves de CATEGORIA_LABEL)
+          porque ese array define el ORDEN de la vitrina Y cuáles se muestran;
+          el objeto no garantiza ninguno de los dos.
           ==================================================================== */}
       <section className="shell py-14 sm:py-20">
         <h2 className="text-2xl sm:text-3xl">Categorías</h2>
         <p className="mt-2 text-sm text-muted">
-          Todo lo que hay, ordenado como lo buscás.
+          Todo lo que hay disponible, ordenado como lo buscás.
         </p>
 
         <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-          {CATEGORIAS.map((categoria) => (
+          {CATEGORIAS_ACTIVAS.map((categoria) => (
             <li key={categoria}>
               <Link
                 href={`/tienda?categoria=${categoria}`}

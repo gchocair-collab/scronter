@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { JSX } from 'react'
-import { CATEGORIAS, CATEGORIA_LABEL } from '@/types'
+import { CATEGORIAS_ACTIVAS, CATEGORIA_LABEL } from '@/types'
 
 /* ============================================================================
    FOOTER
@@ -17,16 +17,16 @@ import { CATEGORIAS, CATEGORIA_LABEL } from '@/types'
    El href="#" es deliberado: un link roto a instagram.com/scronter sería peor
    que uno que no va a ningún lado. */
 const REDES = [
-  { label: 'Instagram', href: '#' },
-  { label: 'TikTok', href: '#' },
-  { label: 'YouTube', href: '#' },
+  { label: 'Instagram', href: 'https://www.instagram.com/scronter.streetlife/' },
+  /*{ label: 'TikTok', href: '#' },*/
+  { label: 'YouTube', href: 'https://www.youtube.com/channel/UCesBE4D071l4ISdARy2QLkQ' },
 ] as const
 
 /* TODO: reemplazar por los datos reales de contacto de Scronter. */
 const CONTACTO = [
-  { label: 'Correo', valor: 'hola@scronter.cl' },
-  { label: 'WhatsApp', valor: '+56 9 0000 0000' },
-  { label: 'Taller', valor: 'Santiago, Chile' },
+  { label: 'Correo', valor: 'scronter.contacto@gmail.com' },
+  { label: 'WhatsApp', valor: '+56 9 7803 7311' },
+  { label: 'Tienda Online', valor: 'Santiago, Coquimbo. Chile' },
 ] as const
 
 export function Footer(): JSX.Element {
@@ -41,22 +41,21 @@ export function Footer(): JSX.Element {
         <div className="col-span-2 lg:col-span-1">
           {/* TODO: reemplazar por el logo real (SVG en /public/logo.svg). */}
           <p className="font-display text-2xl uppercase leading-none tracking-tight text-ink">
-            Scronter
+            StreetLife - SKATEBOARDS - STREETWEAR
           </p>
           <p className="mt-3 max-w-xs text-sm text-muted">
-            Tablas, ropa y fierros para andar. Hecho en Chile, probado en la
-            calle.
+            Creados para quienes viven la calle, el skate y la naturaleza como una sola inspiración.
           </p>
         </div>
 
-        {/* CATEGORÍAS — se generan desde `CATEGORIAS` para que agregar una
-            categoría al catálogo la haga aparecer acá sola. */}
+        {/* CATEGORÍAS — se generan desde `CATEGORIAS_ACTIVAS` para que agregar
+            o reactivar una categoría la haga aparecer acá sola. */}
         <nav aria-labelledby="footer-tienda">
           <h2 id="footer-tienda" className="text-xs uppercase tracking-widest text-muted">
             Tienda
           </h2>
           <ul className="mt-4 space-y-2">
-            {CATEGORIAS.map((categoria) => (
+            {CATEGORIAS_ACTIVAS.map((categoria) => (
               <li key={categoria}>
                 <Link
                   href={`/tienda?categoria=${categoria}`}

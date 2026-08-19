@@ -50,8 +50,8 @@
      dentro de un botón lleno). Con acentos claros y saturados va negro; si
      elegís un acento oscuro, cambialo a `var(--ink)` o quedará ilegible.
      -------------------------------------------------------------------------- */
-  --accent: 198 255 0;     /* #C6FF00 */
-  --accent-hover: 212 255 61;
+  --accent: 80 182 146;     /* #50B692 */
+  --accent-hover: 106 193 162;
   --accent-ink: 10 10 11;  /* texto sobre el acento */
 
   /* --------------------------------------------------------------------------
@@ -60,7 +60,7 @@
      "éxito", cambiar la marca a rojo haría que un pago aprobado se viera como
      un error. Estos tres se quedan quietos aunque cambies `--accent`.
      -------------------------------------------------------------------------- */
-  --ok: 61 220 132;        /* #3DDC84 — pago aprobado, en stock            */
+  --ok: 80 182 146;        /* #50B692 — pago aprobado, en stock            */
   --warn: 255 176 32;      /* #FFB020 — pago pendiente, últimas unidades   */
   --danger: 255 92 77;     /* #FF5C4D — pago rechazado, agotado            */
 
