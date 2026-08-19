@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { JSX } from 'react'
 import Link from 'next/link'
-import type { Product, Variant } from '@/types'
+import { TIPO_VARIANTE_ARTICULO, type Product, type Variant } from '@/types'
 import { totalStock } from '@/data/products'
 import { useCart } from '@/store/cart'
 import { Button } from '@/components/ui/Button'
@@ -83,7 +83,7 @@ export function AddToCart({ producto }: { producto: Product }): JSX.Element {
   const etiquetaBoton = sinStockEnNingunaVariante
     ? 'Agotado'
     : !variante
-      ? `Elegí una ${producto.tipoVariante}`
+      ? `Elegí ${TIPO_VARIANTE_ARTICULO[producto.tipoVariante]}`
       : variante.stock === 0
         ? 'Sin stock'
         : 'Agregar al carrito'

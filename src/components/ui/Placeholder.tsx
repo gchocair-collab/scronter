@@ -46,8 +46,24 @@ export function Placeholder(props: {
    * cards tiene el efecto contrario: compiten entre sí y todo carga más lento.
    */
   priority?: boolean
+  /**
+   * Le dice a Next qué ancho real va a ocupar la imagen en pantalla, para que
+   * pida al servidor una versión de esa resolución y no una más chica. Default
+   * pensado para la grilla de catálogo (2/3/4 columnas). El hero, que ocupa
+   * todo el ancho de la pantalla, tiene que pasar `sizes="100vw"` explícito —
+   * si no, Next le sirve una versión pensada para un card de grilla y el
+   * navegador la estira, y ahí se ve borrosa.
+   */
+  sizes?: string
 }): JSX.Element {
-  const { label, src, ratio = 'square', className, priority = false } = props
+  const {
+    label,
+    src,
+    ratio = 'square',
+    className,
+    priority = false,
+    sizes = '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
+  } = props
 
   const contenedor = cn(
     'relative flex items-center justify-center overflow-hidden',
@@ -69,9 +85,9 @@ export function Placeholder(props: {
           // en vez de deformar, que es lo correcto para fotos de producto de
           // proporciones distintas.
           className="object-cover"
-          // `sizes` evita que Next sirva la versión más grande a un teléfono.
-          // Refleja la grilla real: 2 columnas en móvil, 3 en tablet, 4 en desktop.
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          // `sizes`: evita que Next sirva una versión más chica de la que
+          // realmente se muestra (ver el prop arriba).
+          sizes={sizes}
           priority={priority}
         />
       </div>

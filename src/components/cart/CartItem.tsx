@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import type { CartLineView } from '@/types'
-import { CATEGORIA_LABEL } from '@/types'
+import { CATEGORIA_LABEL, TIPO_VARIANTE_LABEL } from '@/types'
 import { useCart } from '@/store/cart'
 import { formatCLP, cn } from '@/lib/format'
 import { Placeholder } from '@/components/ui/Placeholder'
@@ -25,7 +25,7 @@ export function CartItem({ linea }: { linea: CartLineView }) {
   const removeLine = useCart((s) => s.removeLine)
 
   const { producto, variante, cantidad, subtotal } = linea
-  const rotuloVariante = producto.tipoVariante === 'medida' ? 'Medida' : 'Talla'
+  const rotuloVariante = TIPO_VARIANTE_LABEL[producto.tipoVariante]
 
   // El techo real es el stock de ESA variante, no del producto: podés tener 12
   // poleras y cero en L.

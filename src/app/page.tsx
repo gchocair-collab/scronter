@@ -40,6 +40,17 @@ const ctaBase =
 /** Banner de portada. Formato horizontal, mínimo 1920x1080. */
 const HERO_IMAGEN: string | null = '/images/foto-scronter-hero.jpg'
 
+/**
+ * GIF animado de portada, en vez de la foto de arriba. Si está en `null`, el
+ * hero muestra HERO_IMAGEN (foto fija). Si tiene una ruta, el GIF manda y la
+ * foto queda de respaldo sin usarse.
+ *
+ * Es un <img> normal y no <Image> de next/image a propósito: el optimizador
+ * de Next no anima GIFs (los sirve como frame fijo), así que acá se sirve el
+ * archivo tal cual para que se reproduzca el loop.
+ */
+const HERO_GIF: string | null = '/images/horizontal-stgo-hero.gif'
+
 /** Una foto por categoría, cuadrada. Las que queden en null muestran el bloque. */
 const IMAGEN_CATEGORIA: Record<string, string | null> = {
   tablas: null,
@@ -48,6 +59,13 @@ const IMAGEN_CATEGORIA: Record<string, string | null> = {
   poleras: null,
   zapatillas: null,
 }
+
+/**
+ * Oculta la sección de categorías del home por ahora (se va a usar más
+ * adelante). No se borró nada: poné esto en `true` para que vuelva a
+ * mostrarse, sin tocar el resto del archivo.
+ */
+const MOSTRAR_CATEGORIAS_HOME = false
 
 export default function HomePage() {
   const destacados = getFeaturedProducts()
@@ -58,21 +76,28 @@ export default function HomePage() {
           1 · HERO
           ==================================================================== */}
       <section className="relative isolate overflow-hidden border-b border-line">
-        {/* Banner de portada. Sale de HERO_IMAGEN (arriba de este archivo).
-            Si querés un VIDEO en lugar de foto, este es el único lugar a
-            cambiar: reemplazá el <Placeholder> por un <video autoPlay muted
-            loop playsInline poster="..."> con las mismas clases.
+        {/* Banner de portada. Sale de HERO_GIF si está seteado, si no de
+            HERO_IMAGEN (ambos arriba de este archivo).
             Ojo al cambiarlo: mantené el degradado de abajo, que es lo que le da
             contraste al título sobre cualquier imagen. */}
         <div className="absolute inset-0 -z-10">
-          <Placeholder
-            label="Banner Scronter "
-            src={HERO_IMAGEN}
-            ratio="wide"
-            className="h-full w-full"
-            // priority: es la imagen más grande y visible al cargar la home.
-            priority
-          />
+          {HERO_GIF ? (
+            // eslint-disable-next-line @next/next/no-img-element -- animado, ver comentario en HERO_GIF
+            <img src={HERO_GIF} alt="Banner Scronter" className="h-full w-full object-cover" />
+          ) : (
+            <Placeholder
+              label="Banner Scronter "
+              src={HERO_IMAGEN}
+              ratio="wide"
+              className="h-full w-full"
+              // Ocupa todo el ancho de la pantalla, a diferencia de un card de
+              // grilla — sin esto, Next le serviría una versión chica y se ve
+              // borrosa al estirarla.
+              sizes="100vw"
+              // priority: es la imagen más grande y visible al cargar la home.
+              priority
+            />
+          )}
           {/* Degradado desde el fondo de página hacia arriba: mantiene legible
               el texto sobre cualquier imagen que se ponga después, sin tener
               que retocar la foto. */}
@@ -113,46 +138,51 @@ export default function HomePage() {
 
       {/* ====================================================================
           2 · CATEGORÍAS
+          Detrás de MOSTRAR_CATEGORIAS_HOME (arriba de este archivo) — oculta
+          por ahora, se reactiva más adelante poniendo esa constante en true.
+
           Se recorre CATEGORIAS_ACTIVAS (y no las claves de CATEGORIA_LABEL)
           porque ese array define el ORDEN de la vitrina Y cuáles se muestran;
           el objeto no garantiza ninguno de los dos.
           ==================================================================== */}
-      <section className="shell py-14 sm:py-20">
-        <h2 className="text-2xl sm:text-3xl">Categorías</h2>
-        <p className="mt-2 text-sm text-muted">
-          Todo lo que hay disponible, ordenado como lo buscás.
-        </p>
+      {MOSTRAR_CATEGORIAS_HOME && (
+        <section className="shell py-14 sm:py-20">
+          <h2 className="text-2xl sm:text-3xl">Categorías</h2>
+          <p className="mt-2 text-sm text-muted">
+            Todo lo que hay disponible, ordenado como lo buscás.
+          </p>
 
-        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-          {CATEGORIAS_ACTIVAS.map((categoria) => (
-            <li key={categoria}>
-              <Link
-                href={`/tienda?categoria=${categoria}`}
-                className="group block overflow-hidden rounded border border-line bg-surface transition-colors hover:border-accent"
-              >
-                <div className="relative">
-                  {/* Foto de categoría, de IMAGEN_CATEGORIA (arriba). El rótulo
-                      va abajo sobre el scrim, así no se pisa con el texto que
-                      dibuja el bloque cuando todavía no hay imagen. */}
-                  <Placeholder
-                    label={CATEGORIA_LABEL[categoria]}
-                    src={IMAGEN_CATEGORIA[categoria]}
-                    ratio="square"
-                  />
+          <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+            {CATEGORIAS_ACTIVAS.map((categoria) => (
+              <li key={categoria}>
+                <Link
+                  href={`/tienda?categoria=${categoria}`}
+                  className="group block overflow-hidden rounded border border-line bg-surface transition-colors hover:border-accent"
+                >
+                  <div className="relative">
+                    {/* Foto de categoría, de IMAGEN_CATEGORIA (arriba). El rótulo
+                        va abajo sobre el scrim, así no se pisa con el texto que
+                        dibuja el bloque cuando todavía no hay imagen. */}
+                    <Placeholder
+                      label={CATEGORIA_LABEL[categoria]}
+                      src={IMAGEN_CATEGORIA[categoria]}
+                      ratio="square"
+                    />
 
-                  {/* Scrim solo en la mitad inferior: el rótulo se lee siempre,
-                      pero la imagen no queda apagada del todo. */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-base via-base/70 to-transparent p-3 pt-10">
-                    <span className="block font-display text-sm uppercase tracking-wide text-ink transition-colors group-hover:text-accent sm:text-base">
-                      {CATEGORIA_LABEL[categoria]}
-                    </span>
+                    {/* Scrim solo en la mitad inferior: el rótulo se lee siempre,
+                        pero la imagen no queda apagada del todo. */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-base via-base/70 to-transparent p-3 pt-10">
+                      <span className="block font-display text-sm uppercase tracking-wide text-ink transition-colors group-hover:text-accent sm:text-base">
+                        {CATEGORIA_LABEL[categoria]}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* ====================================================================
           3 · DESTACADOS

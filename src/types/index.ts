@@ -4,13 +4,13 @@
    exactamente qué archivos hay que ajustar.
    ============================================================================ */
 
-/** Las cinco categorías de la tienda. Agregar una acá obliga a agregarla
+/** Las categorías de la tienda. Agregar una acá obliga a agregarla
  *  también en `CATEGORIAS` (abajo) — a propósito, así el filtro nunca queda
  *  desincronizado del tipo. */
-export type Category = 'tablas' | 'gorros' | 'polerones' | 'poleras' | 'zapatillas'
+export type Category = 'tablas' | 'gorros' | 'polerones' | 'poleras' | 'zapatillas' | 'accesorios'
 
 /** Etiquetas legibles para la UI. El `Record<Category, string>` fuerza que
- *  estén las cinco: si agregás una categoría al tipo y te olvidás de acá,
+ *  estén todas: si agregás una categoría al tipo y te olvidás de acá,
  *  no compila. */
 export const CATEGORIA_LABEL: Record<Category, string> = {
   tablas: 'Tablas',
@@ -18,10 +18,18 @@ export const CATEGORIA_LABEL: Record<Category, string> = {
   polerones: 'Polerones',
   poleras: 'Poleras',
   zapatillas: 'Zapatillas',
+  accesorios: 'Accesorios',
 }
 
 /** Orden en que se muestran los filtros y las secciones del home. */
-export const CATEGORIAS: Category[] = ['tablas', 'gorros', 'polerones', 'poleras', 'zapatillas']
+export const CATEGORIAS: Category[] = [
+  'tablas',
+  'gorros',
+  'polerones',
+  'poleras',
+  'zapatillas',
+  'accesorios',
+]
 
 /**
  * Subconjunto de `CATEGORIAS` que se muestra AHORA en la tienda: nav del
@@ -32,7 +40,36 @@ export const CATEGORIAS: Category[] = ['tablas', 'gorros', 'polerones', 'poleras
  * Para reactivar una categoría más adelante, sumala a este array. No hace
  * falta tocar ningún otro archivo.
  */
-export const CATEGORIAS_ACTIVAS: Category[] = ['tablas', 'gorros']
+export const CATEGORIAS_ACTIVAS: Category[] = ['tablas', 'gorros', 'accesorios']
+
+/**
+ * Qué distingue a las variantes de un producto: medida (tablas), talla
+ * (ropa), color, o modelo — para combos/packs donde cada opción del selector
+ * ya combina modelo y medida en un solo label (ver `gorro-beanie-scronter`
+ * para color y el combo de tabla+lija en `products.ts` para modelo).
+ */
+export type TipoVariante = 'medida' | 'talla' | 'color' | 'modelo'
+
+/** Rótulo del selector en el detalle, según `TipoVariante`. */
+export const TIPO_VARIANTE_LABEL: Record<TipoVariante, string> = {
+  medida: 'Medida',
+  talla: 'Talla',
+  color: 'Color',
+  modelo: 'Modelo',
+}
+
+/**
+ * Igual que `TIPO_VARIANTE_LABEL`, pero con el artículo correcto para frases
+ * como "Elegí ___": en español el género cambia según la palabra ("una
+ * medida", "una talla", pero "un color"), así que no alcanza con anteponer
+ * "una" a lo bruto.
+ */
+export const TIPO_VARIANTE_ARTICULO: Record<TipoVariante, string> = {
+  medida: 'una medida',
+  talla: 'una talla',
+  color: 'un color',
+  modelo: 'un modelo',
+}
 
 /**
  * Una variante concreta y comprable de un producto.
@@ -73,8 +110,8 @@ export interface Product {
    * null por su ruta. Ver IMAGENES.md.
    */
   imagen: string | null
-  /** Cómo rotular el selector en el detalle: "Medida" para tablas, "Talla" para ropa. */
-  tipoVariante: 'medida' | 'talla'
+  /** Cómo rotular el selector en el detalle: "Medida" para tablas, "Talla" para ropa, "Color" para gorros de color único. */
+  tipoVariante: TipoVariante
   variantes: Variant[]
   /** Si aparece en la sección de destacados del home. */
   destacado: boolean

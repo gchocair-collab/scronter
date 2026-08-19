@@ -36,9 +36,7 @@ export const products: Product[] = [
     slug: 'tabla-concrete-jungle',
     nombre: 'Scronter Humboldt Skateboard × Creavida',
     categoria: 'tablas',
-    // TODO: precio de venta pendiente de definir. Mientras esté en 0 no se
-    // debería vender de verdad — Flow rechaza montos bajo 350 igual.
-    precio: 0,
+    precio: 35990,
     descripcionCorta: 'Modelo Humboldt, colab con Creavida. Maple canadiense de 7 capas.',
     descripcion:
       'Scronter Humboldt Skateboard × Creavida. Gráfica exclusiva de esta colaboración, con el pingüino de Humboldt sobre la costa. Siete capas de maple canadiense prensado en frío, cóncavo medio y nose ligeramente más alta que el tail. Equilibrada para transición y street. ' +
@@ -58,9 +56,7 @@ export const products: Product[] = [
     slug: 'tabla-nightshift',
     nombre: 'Scronter Black Skateboard',
     categoria: 'tablas',
-    // TODO: precio de venta pendiente de definir. Mientras esté en 0 no se
-    // debería vender de verdad — Flow rechaza montos bajo 350 igual.
-    precio: 0,
+    precio: 35990,
     descripcionCorta: 'Modelo Black, gráfica minimalista sobre fondo negro.',
     descripcion:
       'Scronter Black Skateboard. Logo Scronter serigrafiado en dos tintas sobre fondo negro mate. Cóncavo profundo y wheelbase corto: gira cerrado y bloquea el pie en los grabs. Pensada para bowl y vert más que para street. ' +
@@ -80,7 +76,7 @@ export const products: Product[] = [
     slug: 'tabla-first-push',
     nombre: 'Tabla First Push',
     categoria: 'tablas',
-    precio: 39990,
+    precio: 35990,
     descripcionCorta: 'La de entrada. Cóncavo suave, perdona errores.',
     descripcion:
       'Cóncavo suave y tail más plano, que hace el ollie más fácil de encontrar cuando estás aprendiendo. Misma construcción de 7 capas que el resto de la línea, sin gráfica premium para bajar el precio. Si es tu primera tabla, es esta.',
@@ -98,9 +94,7 @@ export const products: Product[] = [
     slug: 'tabla-grip-tape-og',
     nombre: 'Scronter S Green Skateboard',
     categoria: 'tablas',
-    // TODO: precio de venta pendiente de definir. Mientras esté en 0 no se
-    // debería vender de verdad — Flow rechaza montos bajo 350 igual.
-    precio: 0,
+    precio: 35990,
     descripcionCorta: 'Modelo S Green, gráfica abstracta en verde, blanco y negro.',
     descripcion:
       'Scronter S Green Skateboard. Gráfica abstracta exclusiva de esta tirada, en verde, blanco y negro. Siete capas de maple canadiense. Tirada corta — cuando se agota no vuelve. ' +
@@ -122,13 +116,17 @@ export const products: Product[] = [
     slug: 'gorro-beanie-scronter',
     nombre: 'Beanie Scronter',
     categoria: 'gorros',
-    precio: 17990,
-    descripcionCorta: 'Acrílico grueso, doblez ancho, logo bordado.',
+    precio: 15000,
+    descripcionCorta: 'Acrílico grueso, doblez ancho, logo bordado. 3 colores.',
     descripcion:
-      'Tejido acrílico grueso con doblez ancho y logo bordado al frente. Talla única elasticada. Aguanta invierno santiaguino sin picar.',
-    imagen: null,
-    tipoVariante: 'talla',
-    variantes: [{ id: 'unica', label: 'Única', stock: 14 }],
+      'Tejido acrílico grueso con doblez ancho y logo bordado al frente. Talla única elasticada. Aguanta invierno santiaguino sin picar. Disponible en negro, beige y burdeo.',
+    imagen: '/images/beanies-scronter.jpg',
+    tipoVariante: 'color',
+    variantes: [
+      { id: 'negro', label: 'Negro', stock: 5 },
+      { id: 'beige', label: 'Beige', stock: 5 },
+      { id: 'burdeo', label: 'Burdeo', stock: 4 },
+    ],
     destacado: true,
   },
   {
@@ -144,6 +142,7 @@ export const products: Product[] = [
     tipoVariante: 'talla',
     variantes: [{ id: 'unica', label: 'Única', stock: 9 }],
     destacado: false,
+    disponible: false,
   },
   {
     id: 'gor-003',
@@ -161,6 +160,7 @@ export const products: Product[] = [
       { id: 'L-XL', label: 'L/XL', stock: 6 },
     ],
     destacado: false,
+    disponible: false,
   },
 
   /* ------------------------------------------------------------- POLERONES -- */
@@ -316,6 +316,51 @@ export const products: Product[] = [
       { id: '43', label: '43', stock: 3 },
     ],
     destacado: false,
+  },
+
+  /* ------------------------------------------------------------- ACCESORIOS -- */
+  {
+    id: 'acc-001',
+    slug: 'lija-grizzly-regular-cutout',
+    nombre: 'Lija Grizzly Regular Cutout Griptape',
+    categoria: 'accesorios',
+    precio: 10990,
+    descripcionCorta: 'Grip Grizzly, corte regular, oso troquelado.',
+    descripcion:
+      'Lija Grizzly Griptape, corte regular con el oso troquelado en blanco. Grano estándar con buen agarre y fácil de instalar, sin burbujas. Tamaño único: se recorta al contorno de la tabla al instalar.',
+    imagen: '/images/lija-grizzly-regular-cutout.jpg',
+    tipoVariante: 'medida',
+    variantes: [{ id: 'estandar', label: '9" x 33"', stock: 20 }],
+    destacado: true,
+  },
+
+  /* ---------------------------------------------------------------- OFERTAS -- */
+  {
+    id: 'combo-001',
+    slug: 'combo-tabla-lija-grizzly',
+    nombre: 'Combo Tabla Scronter + Lija Grizzly de Regalo',
+    categoria: 'tablas',
+    precio: 39990,
+    descripcionCorta: 'Cualquier tabla Scronter + lija Grizzly incluida. Sale más barato que comprarlas separadas.',
+    descripcion:
+      'Una tabla Scronter con la Lija Grizzly Regular Cutout Griptape ya incluida en el precio — comprarlas separadas sale $46.980 ($35.990 + $10.990), así que el combo ahorra $6.990. Elegí el modelo (Humboldt × Creavida, Black o S Green) y la medida en el selector — cada opción combina ambas cosas. Misma construcción de 7 capas de maple canadiense que el resto de la línea.',
+    imagen: '/images/tabla-scronter-humboltd.jpg',
+    tipoVariante: 'modelo',
+    variantes: [
+      { id: 'humboldt-8', label: 'Humboldt · 8"', stock: 6 },
+      { id: 'humboldt-8-25', label: 'Humboldt · 8,25"', stock: 5 },
+      { id: 'humboldt-8-38', label: 'Humboldt · 8,38"', stock: 3 },
+      { id: 'humboldt-8-5', label: 'Humboldt · 8,5"', stock: 2 },
+      { id: 'black-8', label: 'Black · 8"', stock: 6 },
+      { id: 'black-8-25', label: 'Black · 8,25"', stock: 4 },
+      { id: 'black-8-38', label: 'Black · 8,38"', stock: 3 },
+      { id: 'black-8-5', label: 'Black · 8,5"', stock: 2 },
+      { id: 'green-8', label: 'S Green · 8"', stock: 2 },
+      { id: 'green-8-25', label: 'S Green · 8,25"', stock: 2 },
+      { id: 'green-8-38', label: 'S Green · 8,38"', stock: 1 },
+      { id: 'green-8-5', label: 'S Green · 8,5"', stock: 1 },
+    ],
+    destacado: true,
   },
 ]
 

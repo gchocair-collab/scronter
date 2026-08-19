@@ -1,7 +1,7 @@
 'use client'
 
 import type { JSX } from 'react'
-import type { Variant } from '@/types'
+import { TIPO_VARIANTE_LABEL, type TipoVariante, type Variant } from '@/types'
 import { cn } from '@/lib/format'
 
 /* ============================================================================
@@ -24,11 +24,11 @@ export function VariantSelector({
   onSelect,
 }: {
   variantes: Variant[]
-  tipo: 'medida' | 'talla'
+  tipo: TipoVariante
   seleccionada: string | null
   onSelect: (variantId: string) => void
 }): JSX.Element {
-  const label = tipo === 'medida' ? 'Medida' : 'Talla'
+  const label = TIPO_VARIANTE_LABEL[tipo]
 
   return (
     <div>
