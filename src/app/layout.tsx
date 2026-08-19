@@ -42,11 +42,14 @@ export const metadata: Metadata = {
     title: 'Scronter — Skate shop',
     description: DESCRIPCION,
     url: '/',
-    /* TODO: reemplazar por la imagen real de Open Graph: 1200×630 px, con el
-       logo sobre fondo oscuro, guardada en /public/og.jpg. Hoy apunta al mismo
-       placeholder que los productos, así que las previsualizaciones se van a ver
-       vacías hasta que exista el archivo. */
-    images: [{ url: '/images/placeholder.jpg', width: 1200, height: 630, alt: 'Scronter' }],
+    images: [
+      {
+        url: '/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Scronter — Skateboards & Streetwear',
+      },
+    ],
   },
   /* Deja el commit desplegado visible en el HTML, como
      <meta name="scronter-build" content="f690c1c">
